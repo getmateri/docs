@@ -289,16 +289,32 @@ Location: `/operations/shredder/backend/`
 
 ### 5.1 Gaps Identified
 
-| ID | Gap | Severity | Phase |
-|----|-----|----------|-------|
-| GAP-01 | Chat routes not registered in API main.go | CRITICAL | Pre-Phase 1 |
-| GAP-02 | Chat streaming endpoint commented out | HIGH | Pre-Phase 1 |
-| GAP-03 | Claude provider not initialized | MEDIUM | Phase 1 |
-| GAP-04 | No project CRUD endpoints | HIGH | Phase 2 |
-| GAP-05 | No projects table in database | HIGH | Phase 2 |
-| GAP-06 | Chat unit tests missing | HIGH | Phase 4 |
-| GAP-07 | Chat E2E tests missing | HIGH | Phase 4 |
-| GAP-08 | Framer Motion not installed | LOW | Phase 3 |
+| ID | Gap | Severity | Phase | Status |
+|----|-----|----------|-------|--------|
+| GAP-01 | Chat routes not registered in API main.go | CRITICAL | Pre-Phase 1 | ✅ RESOLVED |
+| GAP-02 | Chat streaming endpoint commented out | HIGH | Pre-Phase 1 | ✅ RESOLVED |
+| GAP-03 | Claude provider not initialized | MEDIUM | Phase 1 | ✅ RESOLVED |
+| GAP-04 | No project CRUD endpoints | HIGH | Phase 2 | PENDING |
+| GAP-05 | No projects table in database | HIGH | Phase 2 | PENDING |
+| GAP-06 | Chat unit tests missing | HIGH | Phase 4 | PENDING |
+| GAP-07 | Chat E2E tests missing | HIGH | Phase 4 | PENDING |
+| GAP-08 | Framer Motion not installed | LOW | Phase 3 | PENDING |
+
+### 5.1.1 TASKSET 2 Resolutions (2026-01-07)
+
+**GAP-01 Resolution:** Added `routes.SetupChatRoutes(v1, deps)` to `/domain/api/cmd/api/main.go` line 466.
+
+**GAP-02 Resolution:** Updated `/domain/api/internal/routes/chat.routes.go`:
+- Added streaming service initialization with ChatStreamingConfig
+- Added streaming controller initialization
+- Enabled `/conversations/:id/stream` endpoint
+- Enabled `/providers` endpoint
+- Enabled `/providers/health` endpoint
+
+**GAP-03 Resolution:**
+- Created `/domain/api/internal/services/providers/anthropic_provider.go` - Full Anthropic Claude provider implementation with SSE streaming support
+- Updated `/domain/api/internal/services/chat_streaming.service.go` to initialize Anthropic provider when `ANTHROPIC_API_KEY` is set
+- Claude models now available: claude-3-5-sonnet-20241022, claude-3-5-haiku-20241022, claude-3-opus-20240229
 
 ### 5.2 Existing Strengths (No Work Needed)
 

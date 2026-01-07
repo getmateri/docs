@@ -3,6 +3,9 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "dev": "mintlify dev"
+        "dev": "mintlify dev",
+        "audit:docs": "python3 scripts/docs_audit.py",
+        "sync:reference": "python3 scripts/sync_reference.py",
+        "check:reference": "python3 scripts/sync_reference.py --check"
     }
 }
